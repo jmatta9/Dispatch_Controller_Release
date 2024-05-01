@@ -16,15 +16,16 @@ jobs:
         run: echo "::set-output name=tag::$(cat version.txt)"
 
       - name: Create Release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.version.outputs.tag }}
-          release_name: "Release ${{ steps.version.outputs.tag }}"
+          name: ${{ steps.version.outputs.tag }}
           body: "New release ${{ steps.version.outputs.tag }} with the latest executable."
           draft: false
           prerelease: false
+
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
